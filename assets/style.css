@@ -1,0 +1,11 @@
+* {
+    Margin: 0;
+    padding: 0;
+}
+
+.montserrat {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+  }
