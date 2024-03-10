@@ -4,47 +4,47 @@
 const questions = [
     {
         question: "Commonly used data types DO NOT include:", 
-        Answers: [
-            {text: "Strings", correct: False},
-            {text: "Booleans", correct: False},
-            {text: "Alerts", correct: True},
-            {text: "Numbers", correct: False},
+        answers: [
+            {text: "Strings", correct: false},
+            {text: "Booleans", correct: false},
+            {text: "Alerts", correct: true},
+            {text: "Numbers", correct: false},
         ]
     },
     {
         question: "The condition in an if / else statement is inclosed within _____:", 
-        Answers: [
-            {text: "quotes", correct: False},
-            {text: "curly brackets", correct: False},
-            {text: "parentheses", correct: True},
-            {text: "square brackets", correct: False},
+        answers: [
+            {text: "quotes", correct: false},
+            {text: "curly brackets", correct: false},
+            {text: "parentheses", correct: true},
+            {text: "square brackets", correct: false},
         ]   
     },
     {
         question: "Arrays in JS can be used  to store _____:", 
-        Answers: [
-            {text: "Numbers and Strings", correct: False},
-            {text: "Other Arrays", correct: False},
-            {text: "Boolenas", correct: False},
+        answers: [
+            {text: "Numbers and Strings", correct: false},
+            {text: "Other Arrays", correct: false},
+            {text: "Boolenas", correct: false},
             {text: "All of the above", correct: true},
         ]   
     },
     {
         question: "String values muct be enclosed within _____ when being assigned to vatiables:", 
-        Answers: [
-            {text: "commas", correct: False},
-            {text: "curly brackets", correct: False},
-            {text: "quotes", correct: True},
-            {text: "parentheses", correct: False},
+        answers: [
+            {text: "commas", correct: false},
+            {text: "curly brackets", correct: false},
+            {text: "quotes", correct: true},
+            {text: "parentheses", correct: false},
         ]   
     },
         { 
             question: "A very useful tool used during development and debugging for printing content to the debugger is:", 
-            Answers: [
-            {text: "JavaScript", correct: False},
-            {text: "Terminal / Bash", correct: False},
-            {text: "For Loops", correct: False},
-            {text: "console.log", correct: True},
+            answers: [
+            {text: "JavaScript", correct: false},
+            {text: "Terminal / Bash", correct: false},
+            {text: "For Loops", correct: false},
+            {text: "console.log", correct: true},
         ]   
     }
 ];
@@ -71,10 +71,21 @@ function showQuestion() {
     questionElement.innerHTML = questionNo + ". " + currentQuestion.
     question;
 
-    currentQuestion.Answers.forEach(answer => {
+function selectAnswer(e) {
+    const selectBtn = e.target;
+    const isCorrect = selectBtn.dataset.correct === "true";
+    if (isCorrect) {
+        selectBtn.classList.add ("correct");
+        score++;
+    }
+    else {
+        selectBtn.classList.add("incorrect");
+    }
+
+    currentQuestion.answers.forEach(answer => {
         const button = document.createElement("button");
         button.innerHTML = answer.text;
-        button.classList.add("btn");
+        button.classList.add("answer-buttons");
         answerButtons.appendChild(button);
         if(answer.correct) {
             button.dataset.correct = answer.correct;
@@ -85,20 +96,10 @@ function showQuestion() {
 function resetState() {
     nextButton.style.display = "none";
     while(answerButtons.firstChild) {
-        answerButtons.removeChild(answerButtons.firstChild);
+    answerButtons.removeChild(answerButtons.firstChild);
     };
 }
 
-function selectAnswer(e) {
-    const selectBtn = e.target;
-    const isCorrect = selectedBtn.dataset.correct === "true";
-    if (isCorrect) {
-        selectedBtn.classList.add ("correct");
-        score++;
-    }
-    else {
-        selectedBtn.classList.add("incorrect");
-    }
     Array.from(answerButtons.children).forEach(button => {
         if(button.dataset.correct === "true") {
             button.classList.add("correct");
@@ -110,8 +111,8 @@ nextButton.style.display = "block";
 
 function showScore(){
     resetState();
-    questionElement.innerHTML.HTML = 'Your Score ${score} out of ${questions.length}|';
-    nextButton.innerHRTML = "Play Again";
+    questionElement.innerHTML = '';
+    nextButton.innerHTML = "Play Again";
     nextButton.style.display = "Block";
 }
 
@@ -125,7 +126,6 @@ function handleNextButton() {
             }
         }
 
-
 nextButton.addEventListener("click", ()=>
 {
     if(currentQuestionIndex < questions.length){
@@ -134,13 +134,7 @@ nextButton.addEventListener("click", ()=>
     else {
         startTrivia();
     }
-})
-
-
-
-startTrivia();
-
-
+});
 
 // Create time penalizations for wrong answers (take time away)
 
