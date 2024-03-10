@@ -24,10 +24,10 @@ body {
     padding-bottom: 30px;
 }
 
-.trivia {
+.quiz {
     padding: 20px 0; 
 }
-.trivia h2 {
+.quiz h2 {
     font-size: 18px;
     color: #001e4d;
     font-weight: 600;

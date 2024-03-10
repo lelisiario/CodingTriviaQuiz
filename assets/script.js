@@ -57,10 +57,10 @@ const nextButton = document.getElementById("next-btn");
 let currentQuestionIndex = 0;
 let score = 0;
 
-function startTrivia() {
+function startQuiz() {
     currentQuestionIndex = 0;
     score = 0;
-    nextButton.innerHTML = "Next";
+    nextButton.innerHTML = "next";
     showQuestion();
 }
 
@@ -71,16 +71,33 @@ function showQuestion() {
     questionElement.innerHTML = questionNo + ". " + currentQuestion.
     question;
 
+  currentQuestion.answers.forEach(answer => {
+    const button = document.createElement("button");
+    button.innerHTML = answer.text;
+    button.classList.add("btn");
+    answerButtons.appendChild(button)
+  });
+
+startQuiz();
+
 function selectAnswer(e) {
     const selectBtn = e.target;
     const isCorrect = selectBtn.dataset.correct === "true";
+
     if (isCorrect) {
-        selectBtn.classList.add ("correct");
+        selectBtn.classList.add("correct");
         score++;
     }
     else {
         selectBtn.classList.add("incorrect");
     }
+    // disabling buttons afer making a selection
+    Array.from(answerButtons.children).forEach(button => {
+        button.disabled = true;
+        if (button.dataset.correct === "true") {
+            button.classList.add("correct");
+        }
+    });
 
     currentQuestion.answers.forEach(answer => {
         const button = document.createElement("button");
