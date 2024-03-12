@@ -51,11 +51,13 @@ const questions = [
 
 // Create Submit Buttons
 const questionElement = document.getElementById("question");
-const answerButtons = document.getElementById("answer-buttons");
+const answerButton = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
 
 let currentQuestionIndex = 0;
 let score = 0;
+
+
 
 function startQuiz() {
     currentQuestionIndex = 0;
@@ -75,7 +77,7 @@ function showQuestion() {
     const button = document.createElement("button");
     button.innerHTML = answer.text;
     button.classList.add("btn");
-    answerButtons.appendChild(button)
+    answerButton.appendChild(button)
   });
 
 startQuiz();
@@ -92,7 +94,7 @@ function selectAnswer(e) {
         selectBtn.classList.add("incorrect");
     }
     // disabling buttons afer making a selection
-    Array.from(answerButtons.children).forEach(button => {
+    Array.from(answerButton.children).forEach(button => {
         button.disabled = true;
         if (button.dataset.correct === "true") {
             button.classList.add("correct");
@@ -103,7 +105,7 @@ function selectAnswer(e) {
         const button = document.createElement("button");
         button.innerHTML = answer.text;
         button.classList.add("answer-buttons");
-        answerButtons.appendChild(button);
+        answerButton.appendChild(button);
         if(answer.correct) {
             button.dataset.correct = answer.correct;
         }
@@ -112,12 +114,12 @@ function selectAnswer(e) {
 }
 function resetState() {
     nextButton.style.display = "none";
-    while(answerButtons.firstChild) {
-    answerButtons.removeChild(answerButtons.firstChild);
+    while(answerButton.firstChild) {
+    answerButton.removeChild(answerButton.firstChild);
     };
 }
 
-    Array.from(answerButtons.children).forEach(button => {
+    Array.from(answerButton.children).forEach(button => {
         if(button.dataset.correct === "true") {
             button.classList.add("correct");
         }
@@ -135,7 +137,7 @@ function showScore(){
 
 function handleNextButton() {
     currentQuestionIndex++;
-    if(currentQuestionIndex < question.length) {
+    if(currentQuestionIndex < questions.length) {
         showQuestion(); 
     }
     else{
