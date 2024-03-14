@@ -5,7 +5,7 @@ const questions = [
     {
         question: "Commonly used data types DO NOT include:", 
         answers: [
-            {text: "Stringssssssssssssss", correct: false},
+            {text: "Strings", correct: false},
             {text: "Booleans", correct: false},
             {text: "Alerts", correct: true},
             {text: "Numbers", correct: false},
@@ -49,7 +49,7 @@ const questions = [
     }
 ];
 
-// Create Submit Buttons
+// Declaring question variables
 const questionElement = document.getElementById("question");
 const answerButton = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
@@ -58,7 +58,7 @@ let currentQuestionIndex = 0;
 let score = 0;
 
 
-
+//Calling question variables
 function startQuiz() { 
     console.log ("hello");
     currentQuestionIndex = 0;
@@ -87,8 +87,7 @@ function showQuestion() {
   });
 }
 
-//   startQuiz();
-
+//Tells the webpage which answer is correct or incorrect
 function selectAnswer(e) {
     const selectBtn = e.target;
     const isCorrect = selectBtn.dataset.correct === "true";
@@ -111,7 +110,7 @@ function selectAnswer(e) {
     });
     nextButton.style.display = "block";
 
-
+//Resets selection for the next question
 }
 function resetState() {
     nextButton.style.display = "none";
@@ -120,7 +119,7 @@ function resetState() {
     };
 }
 
-
+//End of game, shows score and asks to play again
 function showScore(){
     resetState();
     questionElement.innerHTML = '';
@@ -137,7 +136,7 @@ function handleNextButton() {
             showScore();
             }
         }
-
+//Next button funtionality
 nextButton.addEventListener("click", ()=>
 {
     if(currentQuestionIndex < questions.length){
@@ -148,34 +147,44 @@ nextButton.addEventListener("click", ()=>
     }
 });
 
-
-
+//Starts the quiz
 startQuiz();
 
 
-let fruits = ["apple", "watermelon"]
+//let fruits = ["apple", "watermelon"]
 
 //fruits[0]
 
-console.log(fruits[0])
+// console.log(fruits[0])
 
 
-localStorage.setItem("fruits", JSON.stringify(fruits))
+// localStorage.setItem("fruits", JSON.stringify(fruits))
 
 
-let favNumber = JSON.parse(localStorage.getItem("fruits"))
+// let favNumber = JSON.parse(localStorage.getItem("fruits"))
 
 
-console.log("My favorite Number is " + favNumber[0])
-
-
-// Create time penalizations for wrong answers (take time away)
+// console.log("My favorite Number is " + favNumber[0])
 
 
 
 
+// Declaring Time Variables
+let initialTime = 60;
+const timePenalty = 5;
+let RemainingTime = initialTime;
 
-// Make a new quesiton come up when the sumbit button is clicked
+
+//Calling the Variables
+function deductTime () {
+    RemainingTime -= timePenalty;
+    displayTime();
+}
+
+function displayTime() {
+    const timeDisplay = document.getElementById("time-display");
+    timeDisplay.textContent = 'Time Remaining: ${remainingTime} seconds';
+}
 
 
 // 0 out timer when all questions are answered
