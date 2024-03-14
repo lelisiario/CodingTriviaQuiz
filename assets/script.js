@@ -5,7 +5,7 @@ const questions = [
     {
         question: "Commonly used data types DO NOT include:", 
         answers: [
-            {text: "Strings", correct: false},
+            {text: "Stringssssssssssssss", correct: false},
             {text: "Booleans", correct: false},
             {text: "Alerts", correct: true},
             {text: "Numbers", correct: false},
@@ -59,7 +59,8 @@ let score = 0;
 
 
 
-function startQuiz() {
+function startQuiz() { 
+    console.log ("hello");
     currentQuestionIndex = 0;
     score = 0;
     nextButton.innerHTML = "next";
@@ -77,14 +78,21 @@ function showQuestion() {
     const button = document.createElement("button");
     button.innerHTML = answer.text;
     button.classList.add("btn");
+    button.classList.add("answer-buttons");
+    if(answer.correct) {
+        button.dataset.correct = answer.correct;
+    }
+    button.addEventListener("click", selectAnswer);
     answerButton.appendChild(button)
   });
+}
 
-startQuiz();
+//   startQuiz();
 
 function selectAnswer(e) {
     const selectBtn = e.target;
     const isCorrect = selectBtn.dataset.correct === "true";
+
 
     if (isCorrect) {
         selectBtn.classList.add("correct");
@@ -93,24 +101,17 @@ function selectAnswer(e) {
     else {
         selectBtn.classList.add("incorrect");
     }
+
     // disabling buttons afer making a selection
     Array.from(answerButton.children).forEach(button => {
-        button.disabled = true;
         if (button.dataset.correct === "true") {
             button.classList.add("correct");
         }
+        button.disabled = true;
     });
+    nextButton.style.display = "block";
 
-    currentQuestion.answers.forEach(answer => {
-        const button = document.createElement("button");
-        button.innerHTML = answer.text;
-        button.classList.add("answer-buttons");
-        answerButton.appendChild(button);
-        if(answer.correct) {
-            button.dataset.correct = answer.correct;
-        }
-        button.addEventListener("click", selectAnswer);
-    });
+
 }
 function resetState() {
     nextButton.style.display = "none";
@@ -119,14 +120,6 @@ function resetState() {
     };
 }
 
-    Array.from(answerButton.children).forEach(button => {
-        if(button.dataset.correct === "true") {
-            button.classList.add("correct");
-        }
-        button.disabled = true;
-    });
-nextButton.style.display = "block";
-}
 
 function showScore(){
     resetState();
@@ -151,11 +144,35 @@ nextButton.addEventListener("click", ()=>
         handleNextButton();
     }
     else {
-        startTrivia();
+        startQuiz();
     }
 });
 
+
+
+startQuiz();
+
+
+let fruits = ["apple", "watermelon"]
+
+//fruits[0]
+
+console.log(fruits[0])
+
+
+localStorage.setItem("fruits", JSON.stringify(fruits))
+
+
+let favNumber = JSON.parse(localStorage.getItem("fruits"))
+
+
+console.log("My favorite Number is " + favNumber[0])
+
+
 // Create time penalizations for wrong answers (take time away)
+
+
+
 
 
 // Make a new quesiton come up when the sumbit button is clicked
