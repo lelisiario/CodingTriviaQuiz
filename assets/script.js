@@ -180,17 +180,32 @@ function deductTime () {
     RemainingTime -= timePenalty;
     displayTime();
 }
-
+//Displaying the Time
 function displayTime() {
     const timeDisplay = document.getElementById("time-display");
     timeDisplay.textContent = 'Time Remaining: ${remainingTime} seconds';
 }
 
+//Functionality for the timer
+function startTimer() {
+    const timerInterval = setInterval(callbackFunction, interval); {
+        if (timeLeft > 0) {
+            timeLeft--;
+            timeDisplay.textContent = timeLeft;
+        } else {
+            clearInterval(timerInterval);
+            endQuiz();
+        }
+    } 1000;
+}
 
+function endQuiz() {
+    console.log("Time's up!");
+}
 // 0 out timer when all questions are answered
 
 
-// Create "Game Over" message
+// Create "Game Over" message - browser pop up.
 
 
-// Create function to save score and initials
+// Create function to save score and initials - local storage
