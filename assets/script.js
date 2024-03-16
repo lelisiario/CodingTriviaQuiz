@@ -60,7 +60,7 @@ let score = 0;
 
 //Calling question variables
 function startQuiz() { 
-    console.log ("hello");
+    console.log ("Welcome to the Game!");
     currentQuestionIndex = 0;
     score = 0;
     nextButton.innerHTML = "next";
@@ -150,62 +150,64 @@ nextButton.addEventListener("click", ()=>
 //Starts the quiz
 startQuiz();
 
-
-//let fruits = ["apple", "watermelon"]
-
-//fruits[0]
-
-// console.log(fruits[0])
-
-
-// localStorage.setItem("fruits", JSON.stringify(fruits))
-
-
-// let favNumber = JSON.parse(localStorage.getItem("fruits"))
-
-
-// console.log("My favorite Number is " + favNumber[0])
-
-
-
-
 // Declaring Time Variables
 let initialTime = 60;
 const timePenalty = 5;
 let RemainingTime = initialTime;
 
 
-//Calling the Variables
-function deductTime () {
-    RemainingTime -= timePenalty;
-    displayTime();
-}
 //Displaying the Time
 function displayTime() {
-    const timeDisplay = document.getElementById("time-display");
-    timeDisplay.textContent = 'Time Remaining: ${remainingTime} seconds';
+    const timeDisplay = document.getElementById("timeRemaining");
+    const timerElement = document.getElementById("timer");
+    timerElement.textContent = RemainingTime;
 }
 
 //Functionality for the timer
 function startTimer() {
-    const timerInterval = setInterval(callbackFunction, interval); {
-        if (timeLeft > 0) {
-            timeLeft--;
-            timeDisplay.textContent = timeLeft;
-        } else {
+   const timerInterval = setInterval(function () {
+        RemainingTime--;
+        displayTime();
+        // timeDisplay.textContent = RemainingTime;
+        if (RemainingTime === 0) {
             clearInterval(timerInterval);
             endQuiz();
         }
-    } 1000;
+    }, 1000);
 }
 
-function endQuiz() {
-    console.log("Time's up!");
-}
-// 0 out timer when all questions are answered
-
+startTimer();
 
 // Create "Game Over" message - browser pop up.
-
+function endQuiz() {
+    window.alert("Time's up!");
+}
 
 // Create function to save score and initials - local storage
+
+localStorage.setItem('initials', initials);
+localStorage.setItem('score', score)
+
+
+
+
+// Function to save score and initials in local storage
+
+// function saveScore(initials, score) {
+//     // Create an object to hold the score and initials
+//     const scoreData = {
+//         initials: initials,
+//         score: score
+//     };
+// }
+//     // Convert the object to a JSON string
+//     const scoreJSON = JSON.stringify(scoreData);
+
+//     // Store the JSON string in local storage
+//     localStorage.setItem('scoreData', scoreJSON);
+
+
+// // Example usage
+// const userInitials = 'AB';
+// const userScore = 100;
+// saveScore(userInitials, userScore);
