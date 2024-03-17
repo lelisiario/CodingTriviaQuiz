@@ -34,4 +34,4 @@ Open License
 
 ## Links
 Link to GitHub Repository: https://github.com/lelisiario/CodingTriviaQuiz
-Link to Deployed page: 
+Link to Deployed page: https://lelisiario.github.io/CodingTriviaQuiz/
