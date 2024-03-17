@@ -155,12 +155,44 @@ let initialTime = 60;
 const timePenalty = 5;
 let RemainingTime = initialTime;
 
+// Calling the Variable to deduct the time
+function deductTime() {
+RemainingTime -= timePenalty;
+displayTime();
+}
+//making timePenalty for wrong answers
+function selectAnswer(event) {
+    const selectBtn = event.target;
+    const isCorrect = selectBtn.dataset.correct === 'true';
+
+    if (isCorrect) {
+        selectBtn.classList.add("correct");
+        score++;
+        // Add time penalty
+        RemainingTime += timePenalty;
+    }
+    else {
+        selectBtn.classList.add("incorrect");
+        // Subtract time penalty
+        RemainingTime -= timePenalty;
+    }
+
+    // disabling buttons afer making a selection
+    Array.from(answerButton.children).forEach(button => {
+        if (button.dataset.correct === "true") {
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
+}
 
 //Displaying the Time
 function displayTime() {
     const timeDisplay = document.getElementById("timeRemaining");
-    const timerElement = document.getElementById("timer");
-    timerElement.textContent = RemainingTime;
+    timeDisplay.textContent = 'timeRemaining: ' + ' ' + RemainingTime + ' seconds';
+    // const timerElement = document.getElementById("timer");
+    // timerElement.textContent = RemainingTime;
 }
 
 //Functionality for the timer
@@ -178,36 +210,61 @@ function startTimer() {
 
 startTimer();
 
-// Create "Game Over" message - browser pop up.
+// Create "Game Over" message - browser popup
 function endQuiz() {
-    window.alert("Time's up!");
+    const popup = document.getElementById('popup');
+    popup.style.display = 'block';
 }
 
-// Create function to save score and initials - local storage
+// Function to close the popup
+function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
+}
 
-localStorage.setItem('initials', initials);
-localStorage.setItem('score', score)
+// Function to handle form submission
+function saveScore(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    const initials = document.getElementById('initials').value;
+    const score = document.getElementById('score').value;
+    // Save the initials and score to local storage or perform other actions as needed
+    console.log('Initials:', initials, 'Score:', score);
+    closePopup(); // Close the popup after saving the data
+}
 
+// Declaring global variables and functions
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Event listener setup
+    const scoreForm = document.getElementById('score-form');
+    scoreForm.addEventListener('submit', saveScore);
 
+    // Other initialization code
+    startQuiz(); // Assuming you have an initialization function like this
+    const closeButton = document.getElementById('close-popup');
+    closeButton.addEventListener('click', closePopup);
+});
 
-// Function to save score and initials in local storage
+// End of game, shows score and asks to play again
+function showScore() {
+    resetState();
+    questionElement.innerHTML = '';
+    nextButton.style.display = 'block';
+    endQuiz(); // Display the popup form
+}
 
-// function saveScore(initials, score) {
-//     // Create an object to hold the score and initials
-//     const scoreData = {
-//         initials: initials,
-//         score: score
-//     };
-// }
-//     // Convert the object to a JSON string
-//     const scoreJSON = JSON.stringify(scoreData);
+// Next button functionality
+nextButton.addEventListener('click', handleNextButton);
 
-//     // Store the JSON string in local storage
-//     localStorage.setItem('scoreData', scoreJSON);
+// Retrieve scores and initials from local storage
+const savedScores = JSON.parse(localStorage.getItem('scores')) || [];
 
+// Select the container element where you want to display scores and initials
+const scoresContainer = document.getElementById('scores-container');
 
-// // Example usage
-// const userInitials = 'AB';
-// const userScore = 100;
-// saveScore(userInitials, userScore);
+// Loop through the saved scores and initials and create HTML elements to display them
+savedScores.forEach(score => {
+    const scoreElement = document.createElement('div');
+    scoreElement.textContent = `Initials: ${score.initials}, Score: ${score.score}`;
+    scoresContainer.appendChild(scoreElement);
+});
